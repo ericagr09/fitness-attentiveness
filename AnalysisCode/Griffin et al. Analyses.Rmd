@@ -1,7 +1,7 @@
 ---
 title: "ARS_Analysis"
 author: "Erica Griffin"
-date: "2025-10-27"
+date: "2026-02-06"
 output: html_document
 ---
 ```{r setup1, include=FALSE}
@@ -54,6 +54,17 @@ LRS_model2 <- glm.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mas
 summary(LRS_model2)
 ```
 
+# LRS Supplement Analyses (added birth year random effect): 
+
+```{r}
+LRS_modelS1 <- glmer.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp + (1 | mother_byear), data = LRS) 
+summary(LRS_modelS1)
+```
+
+```{r}
+LRS_modelS2 <- glmer.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp + (1 | mother_byear), data = LRS) 
+summary(LRS_modelS2)
+```
 # ARS Analyses: 
 
 ## ARS ~ M_return (Nest 1)

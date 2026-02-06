@@ -11,7 +11,7 @@
 
 <meta name="author" content="Erica Griffin" />
 
-<meta name="date" content="2025-10-27" />
+<meta name="date" content="2026-02-06" />
 
 <title>ARS_Analysis</title>
 
@@ -352,7 +352,7 @@ display: none;
 
 <h1 class="title toc-ignore">ARS_Analysis</h1>
 <h4 class="author">Erica Griffin</h4>
-<h4 class="date">2025-10-27</h4>
+<h4 class="date">2026-02-06</h4>
 
 </div>
 
@@ -380,14 +380,14 @@ display: none;
 ## 
 ## Repeatability estimation overview: 
 ##           R     SE   2.5%  97.5% P_permut
-## Org   0.123 0.0326 0.0237  0.149       NA
-## Link  0.123 0.0328 0.0237  0.149       NA
+## Org   0.123 0.0319 0.0234  0.149       NA
+## Link  0.123 0.0321 0.0234  0.149       NA
 ## 
 ## 
 ## Bootstrapping: 
 ##           N   Mean Median   2.5%  97.5%
-## Org    1000 0.0804 0.0774 0.0237  0.149
-## Link   1000 0.0805 0.0775 0.0237  0.149
+## Org    1000 0.0797 0.0776 0.0234  0.149
+## Link   1000 0.0799 0.0777 0.0234  0.149
 ## 
 ## Permutation test: 
 ##           N   Mean Median   2.5%  97.5% P_permut
@@ -407,6 +407,7 @@ display: none;
 <pre><code>## Warning in rptGaussian(formula, grname, data, CI, nboot, npermut, parallel, :
 ## 27 rows containing missing values were removed</code></pre>
 <pre><code>## Bootstrap Progress:</code></pre>
+<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
 <pre class="r"><code>summary(repeatability_censored)</code></pre>
 <pre><code>## 
 ## Repeatability estimation using the lmm method
@@ -420,11 +421,11 @@ display: none;
 ## 
 ## Repeatability estimation overview: 
 ##       R     SE   2.5%  97.5% P_permut  LRT_P
-##   0.282 0.0784  0.116  0.424       NA  0.001
+##   0.282 0.0802  0.124  0.434       NA  0.001
 ## 
 ## Bootstrapping and Permutation test: 
 ##             N   Mean Median   2.5%  97.5%
-## boot     1000  0.279  0.284  0.116  0.424
+## boot     1000  0.282  0.283  0.124  0.434
 ## permut      1     NA     NA     NA     NA
 ## 
 ## Likelihood ratio test: 
@@ -437,93 +438,157 @@ display: none;
 </div>
 <div id="lrs-analyses" class="section level1">
 <h1>LRS Analyses:</h1>
-<pre class="r"><code>LRS_model1 &lt;- glmer.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp + (1 | observations), data = LRS) </code></pre>
-<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<pre class="r"><code>summary(LRS_model1)</code></pre>
+<pre class="r"><code>LRS_model1 &lt;- glm.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp, data = LRS) 
+summary(LRS_model1)</code></pre>
+<pre><code>## 
+## Call:
+## glm.nb(formula = LRS ~ scaled_lat + mast_encounter1 + scaled_lat * 
+##     mast_encounter1 + scaled_long + exp, data = LRS, init.theta = 0.7181370523, 
+##     link = log)
+## 
+## Coefficients:
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -0.00466    0.14837  -0.031   0.9749    
+## scaled_lat                    -0.35019    0.13728  -2.551   0.0107 *  
+## mast_encounter1yes             1.09024    0.24210   4.503 6.69e-06 ***
+## scaled_long                    0.57093    0.12709   4.492 7.04e-06 ***
+## exp                           -0.05181    0.03563  -1.454   0.1459    
+## scaled_lat:mast_encounter1yes  0.39651    0.17859   2.220   0.0264 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(0.7181) family taken to be 1)
+## 
+##     Null deviance: 407.15  on 270  degrees of freedom
+## Residual deviance: 254.45  on 265  degrees of freedom
+## AIC: 959.22
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  0.718 
+##           Std. Err.:  0.101 
+## 
+##  2 x log-likelihood:  -945.220</code></pre>
+<pre class="r"><code>LRS_model2 &lt;- glm.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp, data = LRS) 
+summary(LRS_model2)</code></pre>
+<pre><code>## 
+## Call:
+## glm.nb(formula = LRS ~ percent_return + mast_encounter1 + percent_return * 
+##     mast_encounter1 + scaled_long + exp, data = LRS, init.theta = 0.7067402453, 
+##     link = log)
+## 
+## Coefficients:
+##                                    Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                       -0.321659   0.239263  -1.344   0.1788    
+## percent_return                     0.006737   0.003542   1.902   0.0571 .  
+## mast_encounter1yes                 1.540589   0.344749   4.469 7.87e-06 ***
+## scaled_long                        0.579141   0.127317   4.549 5.39e-06 ***
+## exp                               -0.052832   0.035631  -1.483   0.1381    
+## percent_return:mast_encounter1yes -0.009619   0.004694  -2.049   0.0405 *  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for Negative Binomial(0.7067) family taken to be 1)
+## 
+##     Null deviance: 403.23  on 270  degrees of freedom
+## Residual deviance: 254.71  on 265  degrees of freedom
+## AIC: 961.68
+## 
+## Number of Fisher Scoring iterations: 1
+## 
+## 
+##               Theta:  0.7067 
+##           Std. Err.:  0.0995 
+## 
+##  2 x log-likelihood:  -947.6830</code></pre>
+</div>
+<div id="lrs-supplement-analyses-added-birth-year-random-effect" class="section level1">
+<h1>LRS Supplement Analyses (added birth year random effect):</h1>
+<pre class="r"><code>LRS_modelS1 &lt;- glmer.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp + (1 | mother_byear), data = LRS) 
+summary(LRS_modelS1)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
-##  Family: Negative Binomial(0.7181)  ( log )
+##  Family: Negative Binomial(1.3885)  ( log )
 ## Formula: LRS ~ scaled_lat + mast_encounter1 + scaled_lat * mast_encounter1 +  
-##     scaled_long + exp + (1 | observations)
+##     scaled_long + exp + (1 | mother_byear)
 ##    Data: LRS
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    961.2    990.0   -472.6    945.2      263 
+##    905.6    934.4   -444.8    889.6      263 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -0.8136 -0.6061 -0.4583  0.2809  7.1203 
+## -1.0654 -0.6110 -0.4541  0.4577  2.9819 
 ## 
 ## Random effects:
-##  Groups       Name        Variance  Std.Dev. 
-##  observations (Intercept) 7.752e-11 8.805e-06
-## Number of obs: 271, groups:  observations, 4
+##  Groups       Name        Variance Std.Dev.
+##  mother_byear (Intercept) 0.6461   0.8038  
+## Number of obs: 271, groups:  mother_byear, 17
 ## 
 ## Fixed effects:
-##                                Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                   -0.004658   0.146957  -0.032   0.9747    
-## scaled_lat                    -0.350187   0.136459  -2.566   0.0103 *  
-## mast_encounter1yes             1.090236   0.233631   4.666 3.06e-06 ***
-## scaled_long                    0.570934   0.125592   4.546 5.47e-06 ***
-## exp                           -0.051811   0.035851  -1.445   0.1484    
-## scaled_lat:mast_encounter1yes  0.396507   0.172961   2.292   0.0219 *  
+##                               Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                   -0.22434    0.29404  -0.763  0.44547    
+## scaled_lat                    -0.24163    0.13116  -1.842  0.06544 .  
+## mast_encounter1yes             1.50192    0.27629   5.436 5.45e-08 ***
+## scaled_long                    0.44812    0.14178   3.161  0.00157 ** 
+## exp                           -0.03225    0.03253  -0.991  0.32161    
+## scaled_lat:mast_encounter1yes  0.25435    0.15933   1.596  0.11042    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr) scld_lt mst_n1 scld_ln exp   
-## scaled_lat   0.093                              
-## mst_ncntr1y -0.734 -0.067                       
-## scaled_long  0.266  0.031  -0.614               
-## exp         -0.218 -0.088   0.021  0.138        
-## scld_lt:m_1 -0.068 -0.788   0.088 -0.014   0.060
-## optimizer (Nelder_Mead) convergence code: 0 (OK)
-## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<pre class="r"><code>LRS_model2 &lt;- glmer.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp + (1 | observations), data = LRS) </code></pre>
+## scaled_lat   0.008                              
+## mst_ncntr1y -0.556  0.005                       
+## scaled_long  0.243 -0.031  -0.601               
+## exp         -0.131 -0.035  -0.026  0.126        
+## scld_lt:m_1  0.020 -0.814  -0.030  0.091   0.035</code></pre>
+<pre class="r"><code>LRS_modelS2 &lt;- glmer.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp + (1 | mother_byear), data = LRS) </code></pre>
 <pre><code>## Warning in checkConv(attr(opt, &quot;derivs&quot;), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
+##  - Rescale variables?
+
+## Warning in checkConv(attr(opt, &quot;derivs&quot;), opt$par, ctrl = control$checkConv, : Model is nearly unidentifiable: very large eigenvalue
 ##  - Rescale variables?</code></pre>
-<pre><code>## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
-<pre class="r"><code>summary(LRS_model2)</code></pre>
+<pre class="r"><code>summary(LRS_modelS2)</code></pre>
 <pre><code>## Generalized linear mixed model fit by maximum likelihood (Laplace
 ##   Approximation) [glmerMod]
-##  Family: Negative Binomial(0.7068)  ( log )
+##  Family: Negative Binomial(1.3672)  ( log )
 ## Formula: 
 ## LRS ~ percent_return + mast_encounter1 + percent_return * mast_encounter1 +  
-##     scaled_long + exp + (1 | observations)
+##     scaled_long + exp + (1 | mother_byear)
 ##    Data: LRS
 ## 
 ##      AIC      BIC   logLik deviance df.resid 
-##    963.7    992.5   -473.8    947.7      263 
+##    906.7    935.5   -445.4    890.7      263 
 ## 
 ## Scaled residuals: 
 ##     Min      1Q  Median      3Q     Max 
-## -0.8107 -0.6120 -0.4608  0.2194  6.4696 
+## -1.0651 -0.5994 -0.4422  0.4681  2.9526 
 ## 
 ## Random effects:
-##  Groups       Name        Variance  Std.Dev.
-##  observations (Intercept) 2.559e-12 1.6e-06 
-## Number of obs: 271, groups:  observations, 4
+##  Groups       Name        Variance Std.Dev.
+##  mother_byear (Intercept) 0.6473   0.8046  
+## Number of obs: 271, groups:  mother_byear, 17
 ## 
 ## Fixed effects:
 ##                                    Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)                       -0.321658   0.242591  -1.326   0.1849    
-## percent_return                     0.006737   0.003603   1.870   0.0615 .  
-## mast_encounter1yes                 1.540584   0.336401   4.580 4.66e-06 ***
-## scaled_long                        0.579142   0.126400   4.582 4.61e-06 ***
-## exp                               -0.052832   0.035858  -1.473   0.1407    
-## percent_return:mast_encounter1yes -0.009619   0.004595  -2.093   0.0363 *  
+## (Intercept)                       -0.457409   0.345437  -1.324  0.18545    
+## percent_return                     0.004709   0.003518   1.339  0.18072    
+## mast_encounter1yes                 1.825871   0.348089   5.245 1.56e-07 ***
+## scaled_long                        0.449013   0.141855   3.165  0.00155 ** 
+## exp                               -0.032460   0.032492  -0.999  0.31779    
+## percent_return:mast_encounter1yes -0.006458   0.004294  -1.504  0.13257    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Correlation of Fixed Effects:
 ##             (Intr) prcnt_ mst_n1 scld_l exp   
-## percnt_rtrn -0.798                            
-## mst_ncntr1y -0.770  0.585                     
-## scaled_long  0.200 -0.046 -0.428              
-## exp         -0.200  0.093  0.071  0.139       
-## prcnt_rt:_1  0.619 -0.783 -0.718 -0.005 -0.084
-## optimizer (Nelder_Mead) convergence code: 0 (OK)
-## boundary (singular) fit: see help(&#39;isSingular&#39;)</code></pre>
+## percnt_rtrn -0.522                            
+## mst_ncntr1y -0.640  0.523                     
+## scaled_long  0.205  0.006 -0.445              
+## exp         -0.125  0.025  0.002  0.129       
+## prcnt_rt:_1  0.407 -0.817 -0.603 -0.058 -0.037</code></pre>
 </div>
 <div id="ars-analyses" class="section level1">
 <h1>ARS Analyses:</h1>
