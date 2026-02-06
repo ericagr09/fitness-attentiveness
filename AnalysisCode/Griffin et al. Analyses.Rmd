@@ -45,12 +45,12 @@ summary(repeatability_censored)
 # LRS Analyses: 
 
 ```{r}
-LRS_model1 <- glmer.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp + (1 | observations), data = LRS) 
+LRS_model1 <- glm.nb(LRS ~ scaled_lat + mast_encounter1 + scaled_lat*mast_encounter1 + scaled_long + exp, data = LRS) 
 summary(LRS_model1)
 ```
 
 ```{r}
-LRS_model2 <- glmer.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp + (1 | observations), data = LRS) 
+LRS_model2 <- glm.nb(LRS ~ percent_return + mast_encounter1 + percent_return*mast_encounter1 + scaled_long + exp, data = LRS) 
 summary(LRS_model2)
 ```
 
