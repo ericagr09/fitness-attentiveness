@@ -1,2 +1,2 @@
 # fitness-attentiveness
-Data and code for Griffin et al. 2025
+Data and code for Griffin et al. 
